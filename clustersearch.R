@@ -25,6 +25,7 @@ res <- data.frame()
 for (ns in seq(5,7,length.out=10)) {
   nsample <- floor(10^ns)
   ncluster <- floor(nsample/100)
+  cat("Sample size=",nsample," Number of cluster=",ncluster,"\n")
   
   # generate samples
   samples <- matrix(runif(nsample*2),ncol=2)
@@ -47,11 +48,11 @@ for (ns in seq(5,7,length.out=10)) {
   b1 <- microbenchmark({
     x <- runif(2)
     p1 <- find_naive(x,samples,2)
-  },times=10)
+  },times=1)
   b2 <- microbenchmark({
     x <- runif(2)
     p2 <- find_with_cluster(x,cluster_info,2)
-  },times=10)
+  },times=1)
   res <- rbind(res,
                data.frame(samples=nsample,
                           naive=mean(b1$time)/1e6,
